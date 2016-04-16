@@ -1,0 +1,11 @@
+{
+  "name": "moneytracker",
+  "version": "1.0.0",
+  "description": "Money Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matías Potel Feola",
+  "license": "UNLICENSED"
+}
