@@ -4,11 +4,15 @@
   "description": "Money Tracker",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
     "start" : "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint"
   },
   "author": "Matías Potel Feola",
-  "repository": "https://github.com/harrypotel/moneytracker",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/harrypotel/moneytracker"
+  },
   "license": "UNLICENSED",
   "dependencies": {
     "standard": "^6.0.8"
