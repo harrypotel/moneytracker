@@ -1,23 +1,39 @@
-// Lets require/import the HTTP module
-var http = require('http')
-var Persona = require('./persona.js')
+var express = require('express')
+var bodyParser = require('body-parser')
+var app = express()
 
 // Lets define a port we want to listen to
 const PORT = 8080
 
-// We need a function which handles requests and send response
-function handleRequest (request, response) {
-  var p = new Persona('Pepe', 'Popo')
-  p.sayHelloWorld()
+app.use(bodyParser.json())
 
-  response.end('It Works!! Path Hit: ' + request.url)
-}
+// findAll
+app.get('/api/invoices', function (req, res) {
+  var invoices = ['invoice1', 'invoice2']
+  res.send(invoices)
+})
 
-// Create a server
-var server = http.createServer(handleRequest)
+// findOne
+app.get('/api/invoices/:id', function (req, res) {
+  // TODO get from mongo
 
-// Lets start our server
-server.listen(PORT, function () {
-  // Callback triggered when server is successfully listening. Hurray!
-  console.log('Server listening on: http://localhost:%s', PORT)
+  var invoices = {
+    _id: req.params.id
+  }
+  res.send(invoices)
+})
+
+app.post('/api/invoices', function (req, res) {
+  var invoice = {
+    _id: req.body._id
+  }
+
+  // TODO save to mongo
+  console.log('Invoice creada: ' + invoice._id)
+
+  res.sendStatus(200)
+})
+
+app.listen(PORT, function () {
+  console.log('Example app listening on port ' + PORT)
 })

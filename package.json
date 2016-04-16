@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "start" : "node index.js",
+    "start": "node index.js",
     "test": "npm run lint"
   },
   "author": "Matías Potel Feola",
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/harrypotel/moneytracker"
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
     "standard": "^6.0.8"
   }
 }
