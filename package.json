@@ -8,5 +8,8 @@
   },
   "author": "Matías Potel Feola",
   "repository": "https://github.com/harrypotel/moneytracker",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "standard": "^6.0.8"
+  }
 }
