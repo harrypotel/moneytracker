@@ -1,3 +1,4 @@
+var log = require('debug')('moneytracker:root')
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
@@ -29,11 +30,11 @@ app.post('/api/invoices', function (req, res) {
   }
 
   // TODO save to mongo
-  console.log('Invoice creada: ' + invoice._id)
+  log('Invoice creada: ' + invoice._id)
 
   res.sendStatus(200)
 })
 
 app.listen(PORT, function () {
-  console.log('Example app listening on port ' + PORT)
+  log('Example app listening on port ' + PORT)
 })
