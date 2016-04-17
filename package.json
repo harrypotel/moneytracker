@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "start": "node index.js",
+    "start": "NODE_PATH=. DEBUG='moneytracker*' nodemon",
     "test": "npm run lint"
   },
   "author": "Matías Potel Feola",
@@ -16,7 +16,9 @@
   "license": "UNLICENSED",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "debug": "^2.2.0",
     "express": "^4.13.4",
+    "nodemon": "^1.9.1",
     "standard": "^6.0.8"
   }
 }
