@@ -1,6 +1,6 @@
-var log = require('debug')('moneytracker:root')
 var express = require('express')
 var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
 var app = express()
 
 // Lets define a port we want to listen to
@@ -8,33 +8,54 @@ const PORT = 8080
 
 app.use(bodyParser.json())
 
+mongoose.connect('mongodb://localhost/test')
+var db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', function () {
+  // we're connected!
+})
+
+var expenseSchema = mongoose.Schema({
+  _id: Number,
+  date: Date,
+  amount: Number,
+  description: String,
+  category: String
+})
+
+var Expense = mongoose.model('Expense', expenseSchema)
+
 // findAll
-app.get('/api/invoices', function (req, res) {
-  var invoices = ['invoice1', 'invoice2']
-  res.send(invoices)
+app.get('/api/expenses', function (req, res) {
+  Expense.find(function (err, results) {
+    if (err) return console.error(err)
+    res.send(results)
+  })
 })
 
 // findOne
-app.get('/api/invoices/:id', function (req, res) {
-  // TODO get from mongo
-
-  var invoices = {
-    _id: req.params.id
-  }
-  res.send(invoices)
+app.get('/api/expenses/:id', function (req, res) {
+  Expense.findById(req.params.id, function (err, results) {
+    if (err) return console.error(err)
+    res.send(results)
+  })
 })
 
-app.post('/api/invoices', function (req, res) {
-  var invoice = {
-    _id: req.body._id
-  }
+app.post('/api/expenses', function (req, res) {
+  var expense = new Expense()
+  expense._id = req.body._id
+  expense.name = req.body.name
+  expense.date = req.body.date
+  expense.description = req.body.description
 
-  // TODO save to mongo
-  log('Invoice creada: ' + invoice._id)
+  expense.save(function (err, expense) {
+    if (err) return console.error(err)
+    console.log('New expense created: ' + expense)
+  })
 
   res.sendStatus(200)
 })
 
 app.listen(PORT, function () {
-  log('Example app listening on port ' + PORT)
+  console.log('Example app listening on port ' + PORT)
 })
