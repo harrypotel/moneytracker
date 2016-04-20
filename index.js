@@ -1,3 +1,4 @@
+var log = require('debug')('moneytracker:root')
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
@@ -14,6 +15,7 @@ db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
   // we're connected!
 })
+
 
 var expenseSchema = mongoose.Schema({
   _id: Number,
@@ -50,12 +52,12 @@ app.post('/api/expenses', function (req, res) {
 
   expense.save(function (err, expense) {
     if (err) return console.error(err)
-    console.log('New expense created: ' + expense)
+    log('New expense created: ' + expense)
   })
 
   res.sendStatus(200)
 })
 
 app.listen(PORT, function () {
-  console.log('Example app listening on port ' + PORT)
+  log('Example app listening on port ' + PORT)
 })
