@@ -2,7 +2,7 @@ var log = require('debug')('moneytracker:root')
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
-var Expenses = require('domain/expenses/expenses')
+var Expenses = require('./domain/expenses/expenses.js')
 
 var app = express()
 // Lets define a port we want to listen to
@@ -16,7 +16,6 @@ db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
   // we're connected!
 })
-
 
 // findAll
 app.get('/api/expenses', function (req, res) {
