@@ -2,7 +2,7 @@ var log = require('debug')('moneytracker:root')
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
-var Expenses = require('./domain/expenses/expenses.js')
+var Expenses = require('./domain/expenses/expensesPersistence.js')
 
 var app = express()
 // Lets define a port we want to listen to
@@ -18,32 +18,17 @@ db.once('open', function () {
 })
 
 // findAll
-app.get('/api/expenses', function (req, res) {
-  Expenses.find(function (err, results) {
-    if (err) return console.error(err)
-    res.send(results)
-  })
-})
+app.get('/api/expenses', Expenses.find, function (req, res, next) {
+  res.send(req.expenses)
+}
+)
 
 // findOne
-app.get('/api/expenses/:id', function (req, res) {
-  Expenses.findById(req.params.id, function (err, results) {
-    if (err) return console.error(err)
-    res.send(results)
-  })
+app.get('/api/expenses/:id', Expenses.findById, function (req, res, next) {
+  res.send(req.expense)
 })
 
-app.post('/api/expenses', function (req, res) {
-  var expense = new Expenses()
-  expense.name = req.body.name
-  expense.date = req.body.date
-  expense.description = req.body.description
-
-  expense.save(function (err, expense) {
-    if (err) return console.error(err)
-    log('New expense created: ' + expense)
-  })
-
+app.post('/api/expenses', Expenses.create, function (req, res, next) {
   res.sendStatus(200)
 })
 
